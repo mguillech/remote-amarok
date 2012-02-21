@@ -6,7 +6,7 @@ It's built on Python using the Twisted framework, it is also my first
 Twisted project. I hope to improve it as much as the time give me the
 possibility.
 
-Use: git clone http://github.com/mguillech/remote-amarok.git
+Use: git clone https://github.com/mguillech/remote-amarok.git
 
 to download the sources.
 

@@ -12,7 +12,7 @@ def getRemoteAmarokService():
     return internet.TCPServer(8000, f)
 
 
-from server import ServerFactory, RemoteAmarokServer
+from remote_amarok.server import ServerFactory, RemoteAmarokServer
 
 application = service.Application('remote_amarok_server')
 am_server_service = getRemoteAmarokService()
