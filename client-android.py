@@ -4,7 +4,12 @@ import android
 import urllib2
 import time
 
-URL = 'http://ra-web.valetin/api/run-command/?command=%s'
+try:
+    from urllib.parse import urlencode
+except ImportError: # Python 2.7.x running
+    from urllib import urlencode
+
+URL = 'http://DJANGO-SERVER/api/run-command/?'
 droid = android.Android()
 
 command = u''
@@ -19,15 +24,13 @@ while command != u'exitclient':
         except IndexError:
             pass
         else:
-            body = msg['body'].lower()
+            body = msg['body'].lower().split()
             msg_id = int(msg['_id'])
-            if body.startswith('amarok'):
-                print('Message gotten!')
-                command = ' '.join(body.split()[1:])
-                print('Running remote command: %s' % command)
-                _ = urllib2.urlopen(URL % command)
+            if body and body[0] == 'amarok':
+                print('Amarok command received!')
+                print('Running remote command: %s' % ' '.join(body))
+                _ = urllib2.urlopen(URL + urlencode({'command': ' '.join(body)}))
                 print('Marking message with id %d as read' % msg_id)
                 droid.smsMarkMessageRead([msg_id], 1)
                 # try not to hang the UI
                 time.sleep(5)
-

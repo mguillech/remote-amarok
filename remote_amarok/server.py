@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# Copyright (c) Twisted Matrix Laboratories.
-# See LICENSE for details.
 
 import sys
 import dbus
@@ -25,8 +23,8 @@ AM_COMMANDS = {
 
 def run_amarok_cmd(cmd):
     am = dbus.SessionBus().get_object('org.kde.amarok','/Player')
-    dbus_meth = AM_COMMANDS.get(cmd, None)
-    if dbus_meth:
+    dbus_meth = AM_COMMANDS.get(cmd)
+    if dbus_meth and hasattr(am, dbus_meth):
         run_meth = getattr(am, dbus_meth)()
         am.ShowOSD()
         return run_meth
